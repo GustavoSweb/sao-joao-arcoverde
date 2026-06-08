@@ -112,11 +112,11 @@ body {
 
 .home-body {
   flex: 1;
+  min-height: 0;
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
-  min-height: 740px;
 }
 .home-body::-webkit-scrollbar { display: none; }
 
@@ -639,45 +639,6 @@ body {
   gap: 16px;
 }
 
-/* ============================
-   PAGE — PERFIL
-   ============================ */
-.page--perfil {
-  background: var(--bg-light);
-  align-items: center;
-  justify-content: center;
-}
-.perfil-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 32px;
-  color: var(--text-gray);
-}
-.perfil-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: var(--secondary-30);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-brown);
-}
-.perfil-content h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
-  color: #000;
-}
-.perfil-content p {
-  font-size: 14px;
-  text-align: center;
-  line-height: 1.5;
-}
 
 /* ============================
    LUCIDE ICONS
@@ -692,8 +653,7 @@ svg[xmlns] {
 .btn-share svg,
 .carousel-btn svg,
 .btn-saiba-mais svg,
-.quick-action svg,
-.perfil-avatar svg {
+.quick-action svg {
   display: block;
   flex-shrink: 0;
 }

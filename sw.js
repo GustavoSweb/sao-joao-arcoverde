@@ -1,15 +1,17 @@
-const CACHE = 'sao-joao-v1';
+const CACHE = 'sao-joao-v2';
 const SHELL = [
   '/',
   '/index.html',
   '/css/styles.css',
+  '/css/leaflet.css',
+  '/js/leaflet.js',
+  '/js/lucide.min.js',
+  '/js/data.js',
   '/js/app.js',
   '/manifest.json',
   '/icons/icon-192.svg',
   '/icons/icon-512.svg',
   'https://fonts.googleapis.com/css2?family=Anton&family=Arvo:wght@700&family=Poppins:wght@500&family=Roboto:wght@400&family=Inter:wght@700&display=swap',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
 ];
 
 self.addEventListener('install', e => {
