@@ -133,9 +133,7 @@ body {
 .home-hero__bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://www.figma.com/api/mcp/asset/4ff7fac6-cdae-492e-875a-a3a8ffb7859c');
-  background-size: cover;
-  background-position: center top;
+  background: linear-gradient(160deg, #ffb347 0%, #e8622a 45%, #8b1a00 100%);
 }
 .home-hero__title {
   position: relative;
