@@ -16,7 +16,7 @@ const state = {
   page: 'home',
   prevPage: null,
   buscarFilter: 'Todos',
-  transportOrigin: 'Todas',
+  transportCity: 'Todas',
   mapaFilter: 'todos',
   selectedId: null,
   favorites: JSON.parse(localStorage.getItem('sj-favorites') || '[]'),
@@ -125,7 +125,8 @@ function buildHome() {
       if (nav) { navigate(nav); return; }
       if (filter === 'transporte') {
         state.buscarFilter = 'Transporte';
-        state.transportOrigin = 'Todas';
+        state.transportCity = 'Todas';
+
         navigate('buscar');
         renderBuscar();
       } else if (filter) {
@@ -215,19 +216,19 @@ function renderBuscar() {
   if (f === 'Transporte') {
     if (titleEl) titleEl.textContent = 'Transporte';
     if (pills) {
-      pills.innerHTML = TRANSPORT_ORIGINS.map(o =>
-        `<button class="pill ${o === state.transportOrigin ? 'active' : ''}" data-origin="${o}">${o}</button>`
+      pills.innerHTML = TRANSPORT_CITIES.map(c =>
+        `<button class="pill ${c === state.transportCity ? 'active' : ''}" data-city="${c}">${c}</button>`
       ).join('');
       pills.querySelectorAll('.pill').forEach(p => {
         p.addEventListener('click', () => {
-          state.transportOrigin = p.dataset.origin;
+          state.transportCity = p.dataset.city;
           renderBuscar();
         });
       });
     }
-    const filtered = state.transportOrigin === 'Todas'
+    const filtered = state.transportCity === 'Todas'
       ? TRANSPORTE
-      : TRANSPORTE.filter(t => t.origin === state.transportOrigin);
+      : TRANSPORTE.filter(t => t.city === state.transportCity);
     list.innerHTML = filtered.length
       ? filtered.map(renderTransportCard).join('')
       : '<p style="color:var(--text-gray);text-align:center;padding:48px 0;font-size:14px">Nenhum transporte encontrado</p>';
@@ -495,20 +496,22 @@ function renderCard(item) {
 }
 
 function renderTransportCard(t) {
+  const vehicleIcon = t.vehicle === 'van' ? 'bus' : t.vehicle === 'moto' ? 'bike' : 'car';
+  const vehicleLabel = { carro: 'Carro', van: 'Van', moto: 'Moto', taxi: 'Táxi' }[t.vehicle] || t.vehicle;
   return `
     <div class="transport-card">
-      <div class="transport-card__icon">${icon('bus', 26)}</div>
+      <div class="transport-card__icon">${icon(vehicleIcon, 26)}</div>
       <div class="transport-card__body">
         <div class="transport-card__title">${t.title}</div>
-        <div class="transport-card__route">${t.origin} → Arcoverde</div>
+        <div class="transport-card__route">${t.route}</div>
         <div class="transport-card__info">
           <span class="transport-card__price">${t.price}</span>
           <span>•</span>
-          <span>${t.schedule}</span>
+          <span>${vehicleLabel}</span>
         </div>
       </div>
-      <a class="btn-contact" href="tel:+55${t.contact}" aria-label="Ligar para ${t.title}">
-        ${icon('phone', 18)}
+      <a class="btn-contact" href="https://wa.me/55${t.contact}" target="_blank" rel="noopener" aria-label="WhatsApp ${t.title}">
+        ${icon('message-circle', 18)}
       </a>
     </div>
   `;

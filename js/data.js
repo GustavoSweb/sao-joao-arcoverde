@@ -18,15 +18,17 @@ const CAROUSEL_SLIDES = [
 ];
 
 const TRANSPORTE = [
-  { id: 101, title: 'Van Serrana Tur',       origin: 'Pesqueira',          price: 'R$ 35', schedule: 'Saída 19h  •  Volta 02h',    contact: '87991110001' },
-  { id: 102, title: 'Kombi do Marquinhos',   origin: 'Sertânia',           price: 'R$ 40', schedule: 'Saída 18h30  •  Volta 01h',  contact: '87991110002' },
-  { id: 103, title: 'Ônibus Festejo',        origin: 'Caruaru',            price: 'R$ 55', schedule: 'Saída 17h  •  Volta 03h',    contact: '81991110003' },
-  { id: 104, title: 'Van do Seu Manoel',     origin: 'Buíque',             price: 'R$ 30', schedule: 'Saída 20h  •  Volta 02h',    contact: '87991110004' },
-  { id: 105, title: 'Transporte Forrozão',   origin: 'Arcoverde (Centro)', price: 'R$ 15', schedule: 'A cada 30 min a partir das 18h', contact: '87991110005' },
-  { id: 106, title: 'Micro-ônibus Xodó',    origin: 'Venturosa',          price: 'R$ 25', schedule: 'Saída 19h30  •  Volta 02h30', contact: '87991110006' },
+  { id: 101, title: 'Carlos Silva',      vehicle: 'carro', route: 'Arcoverde → Pesqueira',  city: 'Pesqueira',  price: 'R$ 80',        contact: '87991110001' },
+  { id: 102, title: 'Ana Motorista',     vehicle: 'carro', route: 'Arcoverde → Caruaru',    city: 'Caruaru',    price: 'R$ 150',       contact: '87991110002' },
+  { id: 103, title: 'João Van',          vehicle: 'van',   route: 'Arcoverde → Recife',     city: 'Recife',     price: 'R$ 60/pessoa', contact: '81991110003' },
+  { id: 104, title: 'Pedro Táxi',        vehicle: 'carro', route: 'Arcoverde e região',     city: 'Arcoverde',  price: 'A combinar',   contact: '87991110004' },
+  { id: 105, title: 'Moto Fácil',        vehicle: 'moto',  route: 'Arcoverde (cidade)',     city: 'Arcoverde',  price: 'A combinar',   contact: '87991110005' },
+  { id: 106, title: 'Trans Garanhuns',   vehicle: 'van',   route: 'Arcoverde → Garanhuns',  city: 'Garanhuns',  price: 'R$ 40/pessoa', contact: '87991110006' },
+  { id: 107, title: 'Renata Motorista',  vehicle: 'carro', route: 'Arcoverde → Sertânia',   city: 'Sertânia',   price: 'R$ 70',        contact: '87991110007' },
+  { id: 108, title: 'Forro Táxi',        vehicle: 'carro', route: 'Arcoverde → Buíque',     city: 'Buíque',     price: 'R$ 90',        contact: '87991110008' },
 ];
 
-const TRANSPORT_ORIGINS = ['Todas', ...new Set(TRANSPORTE.map(t => t.origin))];
+const TRANSPORT_CITIES = ['Todas', ...new Set(TRANSPORTE.map(t => t.city))];
 
 const MAP_CONFIG = {
   center: { lat: -8.4186, lng: -37.0544 },
