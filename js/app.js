@@ -35,7 +35,10 @@ function navigate(page, opts = {}) {
   document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
   document.getElementById('page-' + page)?.classList.add('active');
 
-  if (page === 'mapa') initMap();
+  if (page === 'mapa') {
+    initMap();
+    setTimeout(() => state.map && state.map.invalidateSize(), 220);
+  }
   if (page === 'buscar' && opts.filter) {
     state.buscarFilter = opts.filter;
     renderBuscar();

@@ -465,6 +465,7 @@ body {
 
 #map {
   flex: 1;
+  min-height: 0;
   width: 100%;
   z-index: 1;
 }
@@ -485,7 +486,10 @@ body {
 
 .mapa-body {
   flex: 1;
+  min-height: 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Slide-up sheet */
