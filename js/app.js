@@ -16,6 +16,7 @@ const state = {
   page: 'home',
   prevPage: null,
   buscarFilter: 'Todos',
+  transportOrigin: 'Todas',
   mapaFilter: 'todos',
   selectedId: null,
   favorites: JSON.parse(localStorage.getItem('sj-favorites') || '[]'),
@@ -91,17 +92,17 @@ function buildHome() {
             ${icon('map-pin', 30)}
             <span>Mapa</span>
           </button>
-          <button class="quick-action" data-filter="favoritos">
-            ${icon('heart', 30)}
-            <span>Favoritos</span>
-          </button>
           <button class="quick-action" data-filter="shows">
             ${icon('music', 30)}
             <span>Shows</span>
           </button>
           <button class="quick-action" data-filter="restaurantes">
             ${icon('pizza', 30)}
-            <span>Restaurantes</span>
+            <span>Comida</span>
+          </button>
+          <button class="quick-action" data-filter="transporte">
+            ${icon('bus', 30)}
+            <span>Transporte</span>
           </button>
         </div>
         <div class="promo-banner">
@@ -122,8 +123,9 @@ function buildHome() {
       const nav = btn.dataset.nav;
       const filter = btn.dataset.filter;
       if (nav) { navigate(nav); return; }
-      if (filter === 'favoritos') {
-        state.buscarFilter = 'Favoritos';
+      if (filter === 'transporte') {
+        state.buscarFilter = 'Transporte';
+        state.transportOrigin = 'Todas';
         navigate('buscar');
         renderBuscar();
       } else if (filter) {
@@ -187,29 +189,17 @@ function buildBuscar() {
     <div class="page-header">
       <div class="page-header__top">
         <button class="btn-back" id="buscarBack">${icon('chevron-left', 24)}</button>
-        <h2 id="buscarTitle">Shows</h2>
+        <h2 id="buscarTitle">Todos</h2>
         <div class="btn-spacer"></div>
       </div>
-      <div class="filter-pills" id="buscarPills">
-        ${DATE_FILTERS.map(f =>
-          `<button class="pill ${f === state.buscarFilter ? 'active' : ''}" data-filter="${f}">${f}</button>`
-        ).join('')}
-      </div>
+      <div class="filter-pills" id="buscarPills"></div>
     </div>
     <div class="items-list" id="buscarList"></div>
     ${buildNav('buscar')}
   `;
 
   lucide.createIcons();
-
   document.getElementById('buscarBack').addEventListener('click', () => navigate(state.prevPage || 'home'));
-  page.querySelectorAll('#buscarPills .pill').forEach(p => {
-    p.addEventListener('click', () => {
-      state.buscarFilter = p.dataset.filter;
-      renderBuscar();
-    });
-  });
-
   bindNav(page);
   renderBuscar();
 }
@@ -221,15 +211,46 @@ function renderBuscar() {
   if (!list) return;
 
   const f = state.buscarFilter;
-  pills?.querySelectorAll('.pill').forEach(p => p.classList.toggle('active', p.dataset.filter === f));
+
+  if (f === 'Transporte') {
+    if (titleEl) titleEl.textContent = 'Transporte';
+    if (pills) {
+      pills.innerHTML = TRANSPORT_ORIGINS.map(o =>
+        `<button class="pill ${o === state.transportOrigin ? 'active' : ''}" data-origin="${o}">${o}</button>`
+      ).join('');
+      pills.querySelectorAll('.pill').forEach(p => {
+        p.addEventListener('click', () => {
+          state.transportOrigin = p.dataset.origin;
+          renderBuscar();
+        });
+      });
+    }
+    const filtered = state.transportOrigin === 'Todas'
+      ? TRANSPORTE
+      : TRANSPORTE.filter(t => t.origin === state.transportOrigin);
+    list.innerHTML = filtered.length
+      ? filtered.map(renderTransportCard).join('')
+      : '<p style="color:var(--text-gray);text-align:center;padding:48px 0;font-size:14px">Nenhum transporte encontrado</p>';
+    lucide.createIcons();
+    return;
+  }
+
+  if (pills) {
+    pills.innerHTML = DATE_FILTERS.map(df =>
+      `<button class="pill ${df === f ? 'active' : ''}" data-filter="${df}">${df}</button>`
+    ).join('');
+    pills.querySelectorAll('.pill').forEach(p => {
+      p.addEventListener('click', () => {
+        state.buscarFilter = p.dataset.filter;
+        renderBuscar();
+      });
+    });
+  }
 
   let items = ITEMS;
   let title = 'Todos';
 
-  if (f === 'Favoritos') {
-    items = ITEMS.filter(i => state.favorites.includes(i.id));
-    title = 'Favoritos';
-  } else if (f === 'Shows') {
+  if (f === 'Shows') {
     items = ITEMS.filter(i => i.type === 'shows');
     title = 'Shows';
   } else if (f === 'Restaurantes') {
@@ -469,6 +490,26 @@ function renderCard(item) {
         </div>
         <button class="btn-details" data-id="${item.id}">Ver detalhes</button>
       </div>
+    </div>
+  `;
+}
+
+function renderTransportCard(t) {
+  return `
+    <div class="transport-card">
+      <div class="transport-card__icon">${icon('bus', 26)}</div>
+      <div class="transport-card__body">
+        <div class="transport-card__title">${t.title}</div>
+        <div class="transport-card__route">${t.origin} → Arcoverde</div>
+        <div class="transport-card__info">
+          <span class="transport-card__price">${t.price}</span>
+          <span>•</span>
+          <span>${t.schedule}</span>
+        </div>
+      </div>
+      <a class="btn-contact" href="tel:+55${t.contact}" aria-label="Ligar para ${t.title}">
+        ${icon('phone', 18)}
+      </a>
     </div>
   `;
 }

@@ -17,6 +17,17 @@ const CAROUSEL_SLIDES = [
   { id: 6, title: 'Mastruz com Leite', sub: '18 Jun  •  Praça Dominguinhos',   color: '#e89050' },
 ];
 
+const TRANSPORTE = [
+  { id: 101, title: 'Van Serrana Tur',       origin: 'Pesqueira',          price: 'R$ 35', schedule: 'Saída 19h  •  Volta 02h',    contact: '87991110001' },
+  { id: 102, title: 'Kombi do Marquinhos',   origin: 'Sertânia',           price: 'R$ 40', schedule: 'Saída 18h30  •  Volta 01h',  contact: '87991110002' },
+  { id: 103, title: 'Ônibus Festejo',        origin: 'Caruaru',            price: 'R$ 55', schedule: 'Saída 17h  •  Volta 03h',    contact: '81991110003' },
+  { id: 104, title: 'Van do Seu Manoel',     origin: 'Buíque',             price: 'R$ 30', schedule: 'Saída 20h  •  Volta 02h',    contact: '87991110004' },
+  { id: 105, title: 'Transporte Forrozão',   origin: 'Arcoverde (Centro)', price: 'R$ 15', schedule: 'A cada 30 min a partir das 18h', contact: '87991110005' },
+  { id: 106, title: 'Micro-ônibus Xodó',    origin: 'Venturosa',          price: 'R$ 25', schedule: 'Saída 19h30  •  Volta 02h30', contact: '87991110006' },
+];
+
+const TRANSPORT_ORIGINS = ['Todas', ...new Set(TRANSPORTE.map(t => t.origin))];
+
 const MAP_CONFIG = {
   center: { lat: -8.4186, lng: -37.0544 },
   zoom: 15,

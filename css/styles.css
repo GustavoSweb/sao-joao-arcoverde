@@ -454,6 +454,77 @@ body {
 }
 .btn-details:active { background: #e05a28; }
 
+/* Transport card */
+.transport-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border-radius: 15px;
+  padding: 14px 12px;
+  flex-shrink: 0;
+}
+.transport-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--secondary-30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-dark);
+  flex-shrink: 0;
+}
+.transport-card__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.transport-card__title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.transport-card__route {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--primary-dark);
+}
+.transport-card__info {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  color: var(--text-gray);
+}
+.transport-card__price {
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+.btn-contact {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.btn-contact:active { background: #1da851; }
+.btn-contact svg { display: block; }
+
 /* ============================
    PAGE — MAPA
    ============================ */
