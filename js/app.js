@@ -90,20 +90,36 @@ function buildHome() {
       <div class="home-content">
         <div class="quick-actions">
           <button class="quick-action" data-nav="mapa">
-            ${icon('map-pin', 30)}
+            ${icon('map-pin', 28)}
             <span>Mapa</span>
           </button>
           <button class="quick-action" data-filter="shows">
-            ${icon('music', 30)}
+            ${icon('music', 28)}
             <span>Shows</span>
           </button>
           <button class="quick-action" data-filter="restaurantes">
-            ${icon('pizza', 30)}
+            ${icon('pizza', 28)}
             <span>Comida</span>
           </button>
           <button class="quick-action" data-filter="transporte">
-            ${icon('bus', 30)}
+            ${icon('bus', 28)}
             <span>Transporte</span>
+          </button>
+          <button class="quick-action" data-filter="hoteis">
+            ${icon('bed-single', 28)}
+            <span>Hotéis</span>
+          </button>
+          <button class="quick-action" data-filter="polo">
+            ${icon('tent', 28)}
+            <span>Polo</span>
+          </button>
+          <button class="quick-action" data-filter="turisticos">
+            ${icon('landmark', 28)}
+            <span>Turismo</span>
+          </button>
+          <button class="quick-action" data-filter="exposicoes">
+            ${icon('image', 28)}
+            <span>Exposições</span>
           </button>
         </div>
         <div class="promo-banner">
@@ -127,7 +143,22 @@ function buildHome() {
       if (filter === 'transporte') {
         state.buscarFilter = 'Transporte';
         state.transportCity = 'Todas';
-
+        navigate('buscar');
+        renderBuscar();
+      } else if (filter === 'polo') {
+        state.buscarFilter = 'Polo';
+        navigate('buscar');
+        renderBuscar();
+      } else if (filter === 'hoteis') {
+        state.buscarFilter = 'Hoteis';
+        navigate('buscar');
+        renderBuscar();
+      } else if (filter === 'turisticos') {
+        state.buscarFilter = 'Turisticos';
+        navigate('buscar');
+        renderBuscar();
+      } else if (filter === 'exposicoes') {
+        state.buscarFilter = 'Exposicoes';
         navigate('buscar');
         renderBuscar();
       } else if (filter) {
@@ -258,6 +289,18 @@ function renderBuscar() {
   } else if (f === 'Restaurantes') {
     items = ITEMS.filter(i => i.type === 'restaurantes');
     title = 'Restaurantes';
+  } else if (f === 'Polo') {
+    items = ITEMS.filter(i => i.location && i.location.toLowerCase().includes('polo'));
+    title = 'Polo';
+  } else if (f === 'Hoteis') {
+    items = ITEMS.filter(i => i.type === 'hoteis');
+    title = 'Hotéis';
+  } else if (f === 'Turisticos') {
+    items = ITEMS.filter(i => i.type === 'turisticos');
+    title = 'Pontos Turísticos';
+  } else if (f === 'Exposicoes') {
+    items = ITEMS.filter(i => i.type === 'exposições');
+    title = 'Exposições';
   } else if (f !== 'Todos') {
     items = ITEMS.filter(i => i.dateFilter === f);
     title = f;
@@ -493,9 +536,18 @@ function renderCard(item) {
     ? `background-image:url(${item.image});background-size:cover;background-position:${pos}`
     : `background:${bg}`;
 
-  const meta = item.type === 'shows'
-    ? `<span>${item.location}</span><span>Capacidade: ${item.capacity}</span>`
-    : `<span>${item.location}</span><span>${item.capacity} lugares</span>`;
+  let meta;
+  if (item.type === 'shows') {
+    meta = `<span>${item.location}</span><span>Capacidade: ${item.capacity || '—'}</span>`;
+  } else if (item.type === 'hoteis') {
+    meta = `<span>${item.location}</span><span>${item.capacity || 'Quartos disponíveis'}</span>`;
+  } else if (item.type === 'turisticos') {
+    meta = `<span>${item.location}</span>`;
+  } else if (item.type === 'exposições') {
+    meta = `<span>${item.location}</span><span>${item.date || ''}</span>`;
+  } else {
+    meta = `<span>${item.location}</span><span>${item.capacity ? item.capacity + ' lugares' : ''}</span>`;
+  }
 
   return `
     <div class="item-card">
@@ -534,7 +586,11 @@ function renderTransportCard(t) {
 }
 
 function typeColor(type) {
-  return type === 'shows' ? '#ff9169' : '#c89060';
+  if (type === 'shows') return '#ff9169';
+  if (type === 'hoteis') return '#7a9ecc';
+  if (type === 'turisticos') return '#6ab87a';
+  if (type === 'exposições') return '#c47ac4';
+  return '#c89060';
 }
 
 function buildNav(active) {

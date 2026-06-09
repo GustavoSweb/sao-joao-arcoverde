@@ -261,8 +261,9 @@ body {
 }
 
 .quick-actions {
-  display: flex;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
   margin-bottom: 16px;
 }
 .quick-action {
