@@ -475,7 +475,7 @@ function renderDetail() {
 
   if (titleEl) titleEl.textContent = item.type === 'shows' ? 'Shows' : 'Restaurantes';
 
-  const today = new Date('2026-05-19');
+  const today = new Date('2026-06-08');
   const rawDate = item.date.includes('-') ? '16/06/2026' : item.date;
   const [d, m, y] = rawDate.split('/');
   const showDate = new Date(`${y}-${m}-${d}`);
