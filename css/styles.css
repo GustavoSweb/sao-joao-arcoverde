@@ -133,13 +133,15 @@ body {
 .home-hero__bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, #ffb347 0%, #e8622a 45%, #8b1a00 100%);
+  background: url('../images/home-bg.png') no-repeat center bottom;
+  background-size: cover;
 }
 .home-hero__title {
   position: relative;
   z-index: 1;
   text-align: center;
-  color: #5f1f16;
+  color: var(--primary);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 .home-hero__title h1 {
   font-family: 'Arvo', serif;
@@ -195,7 +197,6 @@ body {
   inset: 0;
   background-size: cover;
   background-position: center;
-  opacity: 0.4;
 }
 .carousel-slide__content {
   position: absolute;
@@ -409,7 +410,8 @@ body {
   border-radius: 15px;
   background: var(--secondary-60);
   flex-shrink: 0;
-  object-fit: cover;
+  background-size: cover;
+  background-position: center;
 }
 .item-card__body {
   flex: 1;
@@ -629,7 +631,8 @@ body {
   background: #d9d9d9;
   border-radius: 15px;
   flex-shrink: 0;
-  object-fit: cover;
+  background-size: cover;
+  background-position: center;
 }
 
 .detail-info { display: flex; flex-direction: column; gap: 10px; }

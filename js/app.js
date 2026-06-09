@@ -70,9 +70,10 @@ function buildHome() {
           <div class="carousel-track" id="carouselTrack">
             ${CAROUSEL_SLIDES.map((s, i) => `
               <div class="carousel-slide" style="background:${s.color}">
-                <div class="carousel-slide__content">
-                  <div class="carousel-slide__title">${s.title}</div>
-                  <div class="carousel-slide__subtitle">${s.sub}</div>
+                ${s.image ? `<div class="carousel-slide__bg" style="background-image:url(${s.image});background-position:${s.bgPosition || 'center'}"></div>` : ''}
+                <div class="carousel-slide__content" style="${s.textColor ? `color:${s.textColor}` : ''}">
+                  <div class="carousel-slide__title" style="${s.textColor ? `color:${s.textColor}` : ''}">${s.title}</div>
+                  <div class="carousel-slide__subtitle" style="${s.textColor ? `color:${s.textColor};opacity:0.85` : ''}">${s.sub}</div>
                 </div>
                 <button class="carousel-btn" data-id="${s.id}" aria-label="Ver ${s.title}">
                   ${icon('arrow-up-right', 30)}
@@ -264,8 +265,15 @@ function renderBuscar() {
 
   if (titleEl) titleEl.textContent = title;
 
-  list.innerHTML = items.length
-    ? items.map(renderCard).join('')
+  // Prioriza itens com imagem para o protótipo
+  const sortedItems = [...items].sort((a, b) => {
+    if (a.image && !b.image) return -1;
+    if (!a.image && b.image) return 1;
+    return 0;
+  });
+
+  list.innerHTML = sortedItems.length
+    ? sortedItems.map(renderCard).join('')
     : '<p style="color:var(--text-gray);text-align:center;padding:48px 0;font-size:14px">Nenhum item encontrado</p>';
 
   list.querySelectorAll('.btn-details').forEach(btn => {
@@ -430,10 +438,13 @@ function renderDetail() {
   const showDate = new Date(`${y}-${m}-${d}`);
   const daysLeft = Math.max(0, Math.round((showDate - today) / 86400000));
 
-  const outros = ITEMS.filter(i => i.id !== item.id && i.type === item.type).slice(0, 3);
+  const pos = item.bgPosition || 'center';
+  const itemImg = item.image 
+    ? `<div class="detail-img" style="background-image:url(${item.image});background-size:cover;background-position:${pos}"></div>`
+    : `<div class="detail-img" style="background:${typeColor(item.type)}"></div>`;
 
   scroll.innerHTML = `
-    <div class="detail-img" style="background:${typeColor(item.type)}"></div>
+    ${itemImg}
 
     <div class="detail-info">
       <div class="detail-title-row">
@@ -477,13 +488,18 @@ function renderDetail() {
    ============================ */
 function renderCard(item) {
   const bg = typeColor(item.type);
+  const pos = item.bgPosition || 'center';
+  const imgStyle = item.image 
+    ? `background-image:url(${item.image});background-size:cover;background-position:${pos}`
+    : `background:${bg}`;
+
   const meta = item.type === 'shows'
     ? `<span>${item.location}</span><span>Capacidade: ${item.capacity}</span>`
     : `<span>${item.location}</span><span>${item.capacity} lugares</span>`;
 
   return `
     <div class="item-card">
-      <div class="item-card__img" style="background:${bg}"></div>
+      <div class="item-card__img" style="${imgStyle}"></div>
       <div class="item-card__body">
         <div class="item-card__info">
           <div class="item-card__title">${item.title}</div>
