@@ -72,6 +72,12 @@ function buildHome() {
       </div>
 
       <div class="home-content">
+        <button class="quiz-banner-btn" id="btnQuiz">
+          ${icon('gift', 22)}
+          <span>Responda o quiz e ganhe um cupom!</span>
+          ${icon('chevron-right', 20)}
+        </button>
+
         <div class="quick-actions">
           <button class="quick-action" data-nav="mapa">
             ${icon('map-pin', 28)}
@@ -106,12 +112,6 @@ function buildHome() {
             <span>Exposições</span>
           </button>
         </div>
-
-        <button class="quiz-banner-btn" id="btnQuiz">
-          ${icon('gift', 22)}
-          <span>Responda o quiz e ganhe um cupom!</span>
-          ${icon('chevron-right', 20)}
-        </button>
 
         <div class="promo-banner">
           <p>O MELHOR SÃO JOÃO DE PERNAMBUCO!</p>

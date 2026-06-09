@@ -253,11 +253,8 @@ body {
 
 /* Home content (below carousel) */
 .home-content {
-  position: absolute;
-  top: 239px;
-  left: 0;
-  right: 0;
-  padding: 209px 16px 16px;
+  margin-top: 193px;
+  padding: 16px 16px 96px;
 }
 
 .quick-actions {
