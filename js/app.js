@@ -1,17 +1,7 @@
-/* ============================
-   ICON HELPER — Lucide CDN
-   ============================ */
 function icon(name, size = 24) {
   return `<i data-lucide="${name}" width="${size}" height="${size}" style="display:block;width:${size}px;height:${size}px"></i>`;
 }
 
-function applyIcons(el) {
-  if (window.lucide) lucide.createIcons({ nameAttr: 'data-lucide', attrs: {}, icons: {}, ...{} });
-}
-
-/* ============================
-   STATE
-   ============================ */
 const state = {
   page: 'home',
   prevPage: null,
@@ -26,9 +16,6 @@ const state = {
   carousel: { index: 0, timer: null },
 };
 
-/* ============================
-   NAVIGATION
-   ============================ */
 function navigate(page, opts = {}) {
   state.prevPage = state.page;
   state.page = page;
@@ -50,9 +37,6 @@ function navigate(page, opts = {}) {
   }
 }
 
-/* ============================
-   HOME PAGE
-   ============================ */
 function buildHome() {
   const page = document.getElementById('page-home');
   page.innerHTML = `
@@ -122,6 +106,13 @@ function buildHome() {
             <span>Exposições</span>
           </button>
         </div>
+
+        <button class="quiz-banner-btn" id="btnQuiz">
+          ${icon('gift', 22)}
+          <span>Responda o quiz e ganhe um cupom!</span>
+          ${icon('chevron-right', 20)}
+        </button>
+
         <div class="promo-banner">
           <p>O MELHOR SÃO JOÃO DE PERNAMBUCO!</p>
           <div class="promo-banner__line"></div>
@@ -168,6 +159,8 @@ function buildHome() {
     });
   });
 
+  page.querySelector('#btnQuiz')?.addEventListener('click', () => navigate('quiz'));
+
   page.querySelectorAll('.carousel-btn').forEach(btn => {
     btn.addEventListener('click', () => navigate('detail', { id: Number(btn.dataset.id) }));
   });
@@ -175,9 +168,6 @@ function buildHome() {
   bindNav(page);
 }
 
-/* ============================
-   CAROUSEL
-   ============================ */
 function initCarousel() {
   const track = document.getElementById('carouselTrack');
   const dotsEl = document.getElementById('carouselDots');
@@ -213,9 +203,6 @@ function initCarousel() {
   startTimer();
 }
 
-/* ============================
-   BUSCAR PAGE
-   ============================ */
 function buildBuscar() {
   const page = document.getElementById('page-buscar');
   page.innerHTML = `
@@ -308,7 +295,6 @@ function renderBuscar() {
 
   if (titleEl) titleEl.textContent = title;
 
-  // Prioriza itens com imagem para o protótipo
   const sortedItems = [...items].sort((a, b) => {
     if (a.image && !b.image) return -1;
     if (!a.image && b.image) return 1;
@@ -324,9 +310,6 @@ function renderBuscar() {
   });
 }
 
-/* ============================
-   MAPA PAGE
-   ============================ */
 function buildMapa() {
   const page = document.getElementById('page-mapa');
   page.innerHTML = `
@@ -443,9 +426,6 @@ function renderMapaSheet() {
   });
 }
 
-/* ============================
-   DETAIL PAGE
-   ============================ */
 function buildDetail() {
   const page = document.getElementById('page-detail');
   page.innerHTML = `
@@ -482,9 +462,11 @@ function renderDetail() {
   const daysLeft = Math.max(0, Math.round((showDate - today) / 86400000));
 
   const pos = item.bgPosition || 'center';
-  const itemImg = item.image 
+  const itemImg = item.image
     ? `<div class="detail-img" style="background-image:url(${item.image});background-size:cover;background-position:${pos}"></div>`
     : `<div class="detail-img" style="background:${typeColor(item.type)}"></div>`;
+
+  const outros = ITEMS.filter(i => i.id !== item.id && i.type === item.type).slice(0, 4);
 
   scroll.innerHTML = `
     ${itemImg}
@@ -526,13 +508,50 @@ function renderDetail() {
   });
 }
 
-/* ============================
-   SHARED HELPERS
-   ============================ */
+function buildQuiz() {
+  const page = document.getElementById('page-quiz');
+  page.innerHTML = `
+    <div class="page-header">
+      <div class="page-header__top">
+        <button class="btn-back" id="quizBack">${icon('chevron-left', 24)}</button>
+        <h2>Quiz do São João</h2>
+        <div class="btn-spacer"></div>
+      </div>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-intro">
+        ${icon('gift', 40)}
+        <p>Responda o quiz e concorra a um <strong>cupom exclusivo</strong> do São João de Arcoverde 2026!</p>
+      </div>
+      <div data-respondi-container
+           data-respondi-mode="regular"
+           data-respondi-src="https://form.respondi.app/oT2QwwzV"
+           data-respondi-width="100%"
+           data-respondi-height="600px"></div>
+    </div>
+    ${buildNav('quiz')}
+  `;
+
+  lucide.createIcons();
+  document.getElementById('quizBack').addEventListener('click', () => navigate(state.prevPage || 'home'));
+
+  if (!document.getElementById('respondi_src')) {
+    const script = document.createElement('script');
+    script.setAttribute('async', '');
+    script.id = 'respondi_src';
+    script.src = 'https://embed.respondi.app/embed.js';
+    document.body.appendChild(script);
+  } else if (window.Respondi && window.Respondi.init) {
+    window.Respondi.init();
+  }
+
+  bindNav(page);
+}
+
 function renderCard(item) {
   const bg = typeColor(item.type);
   const pos = item.bgPosition || 'center';
-  const imgStyle = item.image 
+  const imgStyle = item.image
     ? `background-image:url(${item.image});background-size:cover;background-position:${pos}`
     : `background:${bg}`;
 
@@ -625,14 +644,12 @@ function bindNav(page) {
   });
 }
 
-/* ============================
-   INIT
-   ============================ */
 function init() {
   buildHome();
   buildBuscar();
   buildMapa();
   buildDetail();
+  buildQuiz();
   navigate('home');
 
   if ('serviceWorker' in navigator) {

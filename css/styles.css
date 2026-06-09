@@ -291,6 +291,62 @@ body {
   white-space: nowrap;
 }
 
+.quiz-banner-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: linear-gradient(135deg, #be410b 0%, #ff713d 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 12px;
+  text-align: left;
+}
+.quiz-banner-btn span {
+  flex: 1;
+}
+.quiz-banner-btn:active {
+  opacity: 0.85;
+}
+
+.page--quiz {
+  background: var(--bg-light);
+  display: flex;
+  flex-direction: column;
+}
+.quiz-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 0 80px;
+}
+.quiz-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 20px 20px;
+  text-align: center;
+  color: var(--text-brown);
+}
+.quiz-intro svg {
+  color: var(--primary);
+}
+.quiz-intro p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-brown);
+}
+.quiz-intro strong {
+  color: var(--primary);
+}
+
 .promo-banner {
   background: linear-gradient(116.25deg, var(--primary-dark) 0%, var(--primary-alt) 100%);
   border-radius: 16px;
