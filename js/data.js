@@ -1403,7 +1403,6 @@ const ITEMS = [
     type: "shows",
     lat: -8.4212,
     lng: -37.0549,
-    image: "images/singers/fernandinha.jpg",
     bgPosition: "center 15%",
   },
   {
@@ -1416,7 +1415,6 @@ const ITEMS = [
     type: "shows",
     lat: -8.4155,
     lng: -37.0538,
-    image: "images/singers/eric-land.jpg",
     bgPosition: "center 15%",
   },
   {
@@ -1938,6 +1936,17 @@ const ITEMS = [
     date: "",
     dateFilter: "Todos",
     type: "turisticos",
+    lat: -8.4050,
+    lng: -37.0420,
+  },
+  {
+    id: 175,
+    title: "Polo Multicultural",
+    location: "Apos a estacao da cultura",
+    capacity: "",
+    date: "",
+    dateFilter: "Todos",
+    type: "polo",
     lat: -8.4050,
     lng: -37.0420,
   },

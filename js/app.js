@@ -277,7 +277,7 @@ function renderBuscar() {
     items = ITEMS.filter(i => i.type === 'restaurantes');
     title = 'Restaurantes';
   } else if (f === 'Polo') {
-    items = ITEMS.filter(i => i.location && i.location.toLowerCase().includes('polo'));
+    items = ITEMS.filter(i => i.type === 'polo');
     title = 'Polo';
   } else if (f === 'Hoteis') {
     items = ITEMS.filter(i => i.type === 'hoteis');

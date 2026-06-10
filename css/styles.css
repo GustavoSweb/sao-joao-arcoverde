@@ -465,7 +465,7 @@ body {
   background: var(--secondary-60);
   flex-shrink: 0;
   background-size: cover;
-  background-position: center;
+  background-position: top centers;
 }
 .item-card__body {
   flex: 1;
